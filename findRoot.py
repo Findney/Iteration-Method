@@ -53,7 +53,7 @@ def metode_iterasi(F, g, x0, e, N):
         # maka akar yang ditemukan adalah xi
         if iterasi == N:
             xi = round(xi, 3)  # Bulatkan nilai xi menjadi 5 angka di belakang koma
-            print(f"\nMaksimum jumlah iterasi telah tercapai. Nilai x = {xi}.\n")
+            print(f"\nMaksimum jumlah iterasi telah tercapai. Nilai x = {xi}\n")
             return xi
         
         # Lakukan iterasi baru dengan g(xi)

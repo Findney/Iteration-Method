@@ -25,51 +25,34 @@ F_x_str = input("Masukkan persamaan F(x): ")
 # Mendefinisikan persamaan G(x)
 G_x_str = input("Masukkan persamaan G(x): ")
 
-# Mendefinisikan fungsi metode iterasi
-def metode_iterasi(F, g, x0, e, N):
-    xi = x0
-    iterasi = 1
-    
-    # Menampilkan header tabel
-    print("\n")
-    print(f"{'Iterasi':<10}{'xi':<20}{'g(xi)':<20}{'f(xi)':<20}")
-    
-    # Loop iterasi akan berjalan hingga mencapai jumlah maksimum iterasi (N)
-    # atau ketika nilai fungsi F(xi) lebih kecil dari toleransi error (e)
-    while iterasi <= N or F(xi) >= e:
-        F_xi = F(xi)
-        
-        # Menampilkan nilai xi, g(xi), dan f(xi) dalam bentuk tabel
-        print(f"{iterasi:<10}{xi:<20}{g(xi):<20}{F_xi:<20}")
+xiAwal = float(input("Masukkan pendekatan awal (x0): "))
+e = float(input("Masukkan toleransi error (e): "))
+N = int(input("Masukkan jumlah maksimum iterasi (N): "))
 
-        # Jika nilai F(xi) sudah lebih kecil dari toleransi error (e),
-        # maka akar yang ditemukan adalah xi
-        if F_xi < e:
-                xi = round(xi, 3)  # Bulatkan nilai xi menjadi 5 angka di belakang koma
-                print(f"\nNilai x didapatkan pada saat iterasi ke - {iterasi}, dengan nilai x = {xi}\n")
-                return xi
-        
-        # Jika sudah mencapai jumlah maksimum iterasi (N),
-        # maka akar yang ditemukan adalah xi
-        if iterasi == N:
-            xi = round(xi, 3)  # Bulatkan nilai xi menjadi 5 angka di belakang koma
-            print(f"\nMaksimum jumlah iterasi telah tercapai. Nilai x = {xi}\n")
-            return xi
-        
-        # Lakukan iterasi baru dengan g(xi)
-        xi = g(xi)
+# Menampilkan header tabel
+print("\n")
+print("=" * 83)  # Garis atas tabel
+print(f"{'|':<3}{'Iterasi':<10}{'|':<3}{'xi':<20}{'|':<3}{'g(xi)':<20}{'|':<3}{'f(xi)':<20}{'|':<1}")
+print("=" * 83)  # Garis bawah tabel
 
-        iterasi += 1
+for iterasi in range(1, N + 2):
+    F_xi = F(xiAwal)
+    g_xi = g(xiAwal)
 
-    return xi
+    # Menampilkan nilai xi, g(xi), dan f(xi) dalam bentuk tabel dengan garis pemisah kolom
+    print(f"{'|':<3}{iterasi:<10}{'|':<3}{xiAwal:<20.6f}{'|':<3}{g_xi:<20.6f}{'|':<3}{F_xi:<20.6f}{'|':<1}")
+    print("-" * 83)  # Garis pemisah setiap baris
 
-try: 
-    # Meminta input dari pengguna
-    x0 = float(input("Masukkan pendekatan awal (x0): "))
-    e = float(input("Masukkan toleransi error (e): "))
-    N = int(input("Masukkan jumlah maksimum iterasi (N): "))
-except ValueError:
-    print("Inputan tidak valid! Mohon periksa kembali inputan Anda")
+    # Jika nilai F(xi) sudah lebih kecil dari toleransi error (e),
+    # maka akar yang ditemukan adalah xi
+    if abs(F_xi) < e:
+        xiAwal = round(xiAwal, 3)  # Bulatkan nilai xi menjadi 3 angka di belakang koma
+        print(f"\nNilai x didapatkan pada saat iterasi ke - {iterasi}, dengan nilai x = {xiAwal:.2f}\n")
+        break
 
-# Panggil fungsi metode_iterasi untuk mencari akar
-hasil_akar = metode_iterasi(F, g, x0, e, N)
+    xiAwal = g_xi
+
+else:
+    xiAwal = round(xiAwal, 3)  # Bulatkan nilai xi menjadi 3 angka di belakang koma
+    print(f"\nMaksimum jumlah iterasi telah tercapai. Nilai x = {xiAwal:.2f}\n")
+
